@@ -1,0 +1,197 @@
+# GasTown Configuration
+# Central configuration for the AI agent orchestration layer
+# Project: awesome-aem-geo (AEM GEO - Generative Engine Optimization)
+
+version: "1.0"
+name: "AEM GEO - GasTown"
+
+# Project metadata
+project:
+  name: awesome-aem-geo
+  description: "AEM GEO - Tools and components for optimizing AEM sites for LLM and traditional search"
+  repository: https://github.com/yourorg/awesome-aem-geo
+  domain: aem-geo
+
+# Agent definitions
+agents:
+  mayor:
+    name: "Mayor AI"
+    description: "Central orchestrator for GasTown workflows"
+    persona: agents/mayor.md
+    capabilities:
+      - task_decomposition
+      - agent_assignment
+      - progress_monitoring
+      - dependency_management
+      - quality_assurance
+
+  coder:
+    name: "AEM GEO Coder"
+    description: "Specialist in AEM SEO/GEO component development"
+    persona: agents/aem-geo-coder.md
+    capabilities:
+      - sling_models
+      - htl_templates
+      - component_dialogs
+      - osgi_services
+      - schema_components
+    tools:
+      - maven
+      - git
+      - aem_cli
+
+  tester:
+    name: "AEM Test Writer"
+    description: "Specialist in AEM testing with TDD"
+    persona: agents/aem-test-writer.md
+    capabilities:
+      - unit_testing
+      - integration_testing
+      - tdd
+      - aem_mocks
+    tools:
+      - junit5
+      - aem_mocks
+      - wcm_io_testing
+      - mockito
+
+  reviewer:
+    name: "AEM Code Reviewer"
+    description: "Specialist in code quality and GEO best practices review"
+    persona: agents/aem-code-reviewer.md
+    capabilities:
+      - code_quality_review
+      - seo_best_practices_review
+      - performance_review
+      - security_review
+      - aemaacs_compatibility
+
+  docs:
+    name: "AEM Documentation"
+    description: "Specialist in technical documentation"
+    persona: agents/aem-documentation.md
+    capabilities:
+      - spec_documentation
+      - api_documentation
+      - readme_documentation
+
+# Workflow configurations
+workflows:
+  default: seo-component-development
+
+  available:
+    - name: seo-component-development
+      file: workflows/seo-component-development.yaml
+      description: "End-to-end workflow for SEO/GEO AEM components"
+      agents: [coder, tester, reviewer, docs]
+
+    - name: spec-driven-development
+      file: workflows/spec-driven-development.yaml
+      description: "TDD workflow with specs first"
+      agents: [coder, tester, reviewer]
+
+    - name: bug-fix
+      file: workflows/bug-fix.yaml
+      description: "Streamlined workflow for bug fixes"
+      agents: [coder, tester, reviewer]
+
+# BEAD configuration
+bead:
+  issues_dir: bead/.issues
+  templates_dir: bead/templates
+
+  # Agent directories
+  agent_dirs:
+    - inbox
+    - coder
+    - tester
+    - reviewer
+    - docs
+    - blocked
+    - completed
+
+  # Issue statuses
+  statuses:
+    - pending
+    - in_progress
+    - blocked
+    - completed
+    - cancelled
+
+  # Priority levels
+  priorities:
+    - critical
+    - high
+    - medium
+    - low
+
+# Quality gates
+quality_gates:
+  compilation:
+    command: mvn compile -q
+    required: true
+
+  unit_tests:
+    command: mvn test -q
+    required: true
+
+  coverage:
+    command: mvn jacoco:report
+    threshold: 80
+    required: true
+
+  security_scan:
+    command: mvn dependency-check:check
+    required: false
+
+# Timeouts (in minutes)
+timeouts:
+  phase_default: 30
+  workflow_max: 240
+  blocked_escalation: 60
+
+# Retry policy
+retry:
+  max_attempts: 2
+  backoff: exponential
+  conditions:
+    - transient_error
+    - timeout
+    - compilation_failure
+
+# Notifications
+notifications:
+  on_workflow_start: true
+  on_phase_complete: true
+  on_blocked: true
+  on_workflow_complete: true
+
+# Claude Code integration
+claude_code:
+  invocation_examples:
+    mayor: |
+      Please read bmad/gastown/agents/mayor.md and adopt the Mayor AI persona.
+      Orchestrate workflow {workflow_id} following the spec-driven-development workflow.
+
+    agent: |
+      Please read bmad/gastown/agents/{agent}.md and adopt that persona.
+      Work on issue {issue_id} from bmad/gastown/bead/.issues/{agent}/.
+
+  session_protocol:
+    start:
+      - Read your context.json file
+      - Check for pending handoffs in inbox
+      - Identify current active issues
+      - Resume or pick up new work
+    end:
+      - Update context.json with session progress
+      - Commit all changes with BEAD commit format
+      - Update issue status if needed
+
+# Paths (relative to gastown directory)
+paths:
+  agents: agents/
+  workflows: workflows/
+  bead: bead/
+  scripts: scripts/
+  config: config/

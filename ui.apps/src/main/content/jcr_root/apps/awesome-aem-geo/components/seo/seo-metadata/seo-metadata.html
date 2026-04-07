@@ -1,0 +1,68 @@
+<!-- SEO Metadata Component
+     Renders SEO-critical metadata in the page <head>
+     
+     Usage in page template:
+     <sly data-sly-use.seo="com.awesomeaem.geo.models.SeoMetadataModel"
+          data-sly-call="${seo @ request=resourceResolver}"/>
+-->
+<sly data-sly-use.seo="com.awesomeaem.geo.models.SeoMetadataModel">
+
+<!-- Title Tag -->
+<sly data-sly-test="${seo.title}">
+    <title data-sly-text="${seo.title}">${seo.title}</title>
+</sly>
+
+<!-- Meta Description -->
+<sly data-sly-test="${seo.description}">
+    <meta name="description" content="${seo.description}"/>
+</sly>
+
+<!-- Canonical URL -->
+<sly data-sly-test="${seo.canonicalUrl}">
+    <link rel="canonical" href="${seo.canonicalUrl}"/>
+</sly>
+
+<!-- OpenGraph Meta Tags -->
+<sly data-sly-test="${seo.ogTitle}">
+    <meta property="og:title" content="${seo.ogTitle}"/>
+</sly>
+<sly data-sly-test="${seo.ogDescription}">
+    <meta property="og:description" content="${seo.ogDescription}"/>
+</sly>
+<sly data-sly-test="${seo.ogImage}">
+    <meta property="og:image" content="${seo.ogImage}"/>
+</sly>
+<sly data-sly-test="${seo.ogType}">
+    <meta property="og:type" content="${seo.ogType}"/>
+</sly>
+<sly data-sly-test="${seo.canonicalUrl}">
+    <meta property="og:url" content="${seo.canonicalUrl}"/>
+</sly>
+<sly data-sly-test="${seo.locale}">
+    <meta property="og:locale" content="${seo.locale}"/>
+</sly>
+
+<!-- Twitter Card Meta Tags -->
+<sly data-sly-test="${seo.twitterCard}">
+    <meta name="twitter:card" content="${seo.twitterCard}"/>
+</sly>
+<sly data-sly-test="${seo.twitterTitle}">
+    <meta name="twitter:title" content="${seo.twitterTitle}"/>
+</sly>
+<sly data-sly-test="${seo.twitterDescription}">
+    <meta name="twitter:description" content="${seo.twitterDescription}"/>
+</sly>
+<sly data-sly-test="${seo.twitterImage}">
+    <meta name="twitter:image" content="${seo.twitterImage}"/>
+</sly>
+
+<!-- Robots Meta -->
+<sly data-sly-test="${seo.robots}">
+    <meta name="robots" content="${seo.robots}"/>
+</sly>
+
+<!-- JSON-LD Schema (for AI/SEO) -->
+<sly data-sly-use.schemaHelper="com.awesomeaem.geo.services.JsonLdSchemaHelper"
+     data-sly-test="${schemaHelper.hasSchema}">
+    <script type="application/ld+json">${schemaHelper.jsonLd @ context='unsafe'}</script>
+</sly>

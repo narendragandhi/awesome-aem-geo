@@ -1,0 +1,23 @@
+# Maven
+**/target/
+
+# IDE
+.idea/
+*.iml
+*.ipr
+*.iws
+.classpath
+.project
+.settings/
+
+# OS
+.DS_Store
+
+# Logs
+*.log
+
+# Node
+node_modules/
+
+# Misc
+*.swp

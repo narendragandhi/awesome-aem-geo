@@ -1,0 +1,20 @@
+<!-- EEAT Signals Component -->
+<sly data-sly-use.model="com.awesomeaem.geo.models.EEATSignalsModel"
+     data-sly-test="${model}">
+
+<!-- Combined E-E-A-T JSON-LD -->
+<sly data-sly-test="${model.eeatJsonLd}">
+    <script type="application/ld+json">${model.eeatJsonLd @ context='unsafe'}</script>
+</sly>
+
+<!-- Trust Badges -->
+<sly data-sly-test="${model.trustBadges}">
+    <meta data-sly-list.badge="${model.trustBadges}" name="trust-badge" content="${badge}"/>
+</sly>
+
+<!-- Fact Check -->
+<sly data-sly-test="${model.factCheckUrl}">
+    <link rel="fact-check" href="${model.factCheckUrl}"/>
+</sly>
+
+</sly>

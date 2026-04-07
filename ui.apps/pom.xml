@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.awesomeaem.geo</groupId>
+        <artifactId>awesome-aem-geo</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>awesome-aem-geo.ui.apps</artifactId>
+    <packaging>content-package</packaging>
+
+    <name>Awesome AEM GEO - UI Apps</name>
+    <description>UI apps package for Awesome AEM GEO</description>
+
+    <dependencies>
+        <!-- Internal dependencies -->
+        <dependency>
+            <groupId>com.awesomeaem.geo</groupId>
+            <artifactId>awesome-aem-geo.core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <!-- AEM SDK -->
+        <dependency>
+            <groupId>com.adobe.aem</groupId>
+            <artifactId>aem-sdk-api</artifactId>
+        </dependency>
+
+        <!-- WCM Core Components -->
+        <dependency>
+            <groupId>com.adobe.cq</groupId>
+            <artifactId>core.wcm.components.content</artifactId>
+            <version>2.26.0</version>
+            <type>zip</type>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- Content Package Maven Plugin -->
+            <plugin>
+                <groupId>org.apache.jackrabbit</groupId>
+                <artifactId>filevault-package-maven-plugin</artifactId>
+                <extensions>true</extensions>
+                <executions>
+                    <execution>
+                        <id>default-package</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>package</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>validate-package</id>
+                        <phase>none</phase>
+                    </execution>
+                </executions>
+                <configuration>
+                    <group>com.awesomeaem.geo</group>
+                    <name>awesome-aem-geo.ui.apps</name>
+                    <packageType>mixed</packageType>
+                    <properties>
+                        <cloudManagerTarget>none</cloudManagerTarget>
+                    </properties>
+                </configuration>
+            </plugin>
+
+            <!-- Content Package Plugin -->
+            <plugin>
+                <groupId>com.day.jcr.vault</groupId>
+                <artifactId>content-package-maven-plugin</artifactId>
+                <configuration>
+                    <targetURL>http://${aem.host}:${aem.port}/crx/packmgr/service.jsp</targetURL>
+                    <failOnError>true</failOnError>
+                    <userId>admin</userId>
+                    <password>admin</password>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
