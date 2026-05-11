@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0"
+          xmlns:cq="http://www.day.com/jcr/cq/1.0"
+          xmlns:jcr="http://www.jcp.org/jcr/1.0"
+          xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+          jcr:primaryType="nt:unstructured"
+          sling:resourceType="cq/gui/components/authoring/dialog"
+          jcr:title="SEO Metadata">
+    <content jcr:primaryType="nt:unstructured"
+             sling:resourceType="granite/ui/components/coral/foundation/container">
+        <items jcr:primaryType="nt:unstructured">
+            <tabs jcr:primaryType="nt:unstructured"
+                  sling:resourceType="granite/ui/components/coral/foundation/tabs">
+                <items jcr:primaryType="nt:unstructured">
+                    <basic jcr:primaryType="nt:unstructured"
+                           jcr:title="Basic"
+                           sling:resourceType="granite/ui/components/coral/foundation/container"
+                           margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns jcr:primaryType="nt:unstructured"
+                                     sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                     margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <seoTitle jcr:primaryType="nt:unstructured"
+                                                      sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                      fieldLabel="SEO Title"
+                                                      fieldDescription="Title for search engines (max 60 chars). Falls back to jcr:title."
+                                                      name="./seoTitle"/>
+                                            <seoDescription jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                                                            fieldLabel="SEO Description"
+                                                            fieldDescription="Meta description (max 160 chars). Falls back to jcr:description."
+                                                            name="./seoDescription"
+                                                            rows="3"/>
+                                            <canonicalUrl jcr:primaryType="nt:unstructured"
+                                                          sling:resourceType="granite/ui/components/coral/foundation/form/pathbrowser"
+                                                          fieldLabel="Canonical URL"
+                                                          fieldDescription="Custom canonical URL. Falls back to page URL."
+                                                          name="./canonicalUrl"
+                                                          rootPath="/content"/>
+                                            <siteDomain jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                        fieldLabel="Site Domain"
+                                                        fieldDescription="Domain for absolute URLs (e.g., https://www.example.com)"
+                                                        name="./siteDomain"/>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </basic>
+                    <opengraph jcr:primaryType="nt:unstructured"
+                               jcr:title="OpenGraph"
+                               sling:resourceType="granite/ui/components/coral/foundation/container"
+                               margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns jcr:primaryType="nt:unstructured"
+                                     sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                     margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <ogTitle jcr:primaryType="nt:unstructured"
+                                                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                     fieldLabel="OG Title"
+                                                     fieldDescription="OpenGraph title. Falls back to SEO Title."
+                                                     name="./ogTitle"/>
+                                            <ogDescription jcr:primaryType="nt:unstructured"
+                                                           sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                                                           fieldLabel="OG Description"
+                                                           fieldDescription="OpenGraph description. Falls back to SEO Description."
+                                                           name="./ogDescription"
+                                                           rows="2"/>
+                                            <ogImage jcr:primaryType="nt:unstructured"
+                                                     sling:resourceType="granite/ui/components/coral/foundation/form/pathbrowser"
+                                                     fieldLabel="OG Image"
+                                                     fieldDescription="OpenGraph social sharing image"
+                                                     name="./ogImage"
+                                                     rootPath="/content/dam"/>
+                                            <ogType jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                    fieldLabel="OG Type"
+                                                    fieldDescription="OpenGraph object type"
+                                                    name="./ogType">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <website jcr:primaryType="nt:unstructured"
+                                                             text="Website"
+                                                             value="website"/>
+                                                    <article jcr:primaryType="nt:unstructured"
+                                                             text="Article"
+                                                             value="article"/>
+                                                    <product jcr:primaryType="nt:unstructured"
+                                                             text="Product"
+                                                             value="product"/>
+                                                    <video jcr:primaryType="nt:unstructured"
+                                                           text="Video"
+                                                           value="video.other"/>
+                                                </items>
+                                            </ogType>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </opengraph>
+                    <twitter jcr:primaryType="nt:unstructured"
+                             jcr:title="Twitter Card"
+                             sling:resourceType="granite/ui/components/coral/foundation/container"
+                             margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns jcr:primaryType="nt:unstructured"
+                                     sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                     margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <twitterCard jcr:primaryType="nt:unstructured"
+                                                         sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                         fieldLabel="Card Type"
+                                                         fieldDescription="Twitter card type"
+                                                         name="./twitterCard">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <summary jcr:primaryType="nt:unstructured"
+                                                             text="Summary"
+                                                             value="summary"/>
+                                                    <summaryLargeImage jcr:primaryType="nt:unstructured"
+                                                                       text="Summary Large Image"
+                                                                       value="summary_large_image"/>
+                                                </items>
+                                            </twitterCard>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </twitter>
+                    <robots jcr:primaryType="nt:unstructured"
+                            jcr:title="Robots"
+                            sling:resourceType="granite/ui/components/coral/foundation/container"
+                            margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns jcr:primaryType="nt:unstructured"
+                                     sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                     margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <noIndex jcr:primaryType="nt:unstructured"
+                                                     sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                     text="No Index"
+                                                     fieldDescription="Exclude from search engines"
+                                                     name="./noIndex"
+                                                     value="{Boolean}true"
+                                                     uncheckedValue="{Boolean}false"/>
+                                            <noFollow jcr:primaryType="nt:unstructured"
+                                                      sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                      text="No Follow"
+                                                      fieldDescription="Tell crawlers not to follow links"
+                                                      name="./noFollow"
+                                                      value="{Boolean}true"
+                                                      uncheckedValue="{Boolean}false"/>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </robots>
+                </items>
+            </tabs>
+        </items>
+    </content>
+</jcr:root>

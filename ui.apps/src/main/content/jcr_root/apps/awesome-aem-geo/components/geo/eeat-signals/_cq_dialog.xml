@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0"
+          xmlns:cq="http://www.day.com/jcr/cq/1.0"
+          xmlns:jcr="http://www.jcp.org/jcr/1.0"
+          xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+          jcr:primaryType="nt:unstructured"
+          sling:resourceType="cq/gui/components/authoring/dialog"
+          jcr:title="E-E-A-T Signals">
+    <content jcr:primaryType="nt:unstructured"
+             sling:resourceType="granite/ui/components/coral/foundation/container">
+        <items jcr:primaryType="nt:unstructured">
+            <tabs jcr:primaryType="nt:unstructured"
+                  sling:resourceType="granite/ui/components/coral/foundation/tabs">
+                <items jcr:primaryType="nt:unstructured">
+                    <author jcr:primaryType="nt:unstructured"
+                            jcr:title="Author"
+                            sling:resourceType="granite/ui/components/coral/foundation/container"
+                            margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns jcr:primaryType="nt:unstructured"
+                                     sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                     margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <authorName jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                        fieldLabel="Author Name"
+                                                        name="./authorName"/>
+                                            <authorJobTitle jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldLabel="Author Job Title"
+                                                            name="./authorJobTitle"/>
+                                            <authorUrl jcr:primaryType="nt:unstructured"
+                                                       sling:resourceType="granite/ui/components/coral/foundation/form/pathbrowser"
+                                                       fieldLabel="Author Profile Page"
+                                                       name="./authorUrl"
+                                                       rootPath="/content"/>
+                                            <authorImage jcr:primaryType="nt:unstructured"
+                                                         sling:resourceType="granite/ui/components/coral/foundation/form/pathbrowser"
+                                                         fieldLabel="Author Image"
+                                                         name="./authorImage"
+                                                         rootPath="/content/dam"/>
+                                            <authorCredentials jcr:primaryType="nt:unstructured"
+                                                               sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                                               fieldLabel="Author Credentials"
+                                                               composite="{Boolean}false">
+                                                <field jcr:primaryType="nt:unstructured"
+                                                       sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                       name="./value"/>
+                                            </authorCredentials>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </author>
+                    <organization jcr:primaryType="nt:unstructured"
+                                  jcr:title="Organization"
+                                  sling:resourceType="granite/ui/components/coral/foundation/container"
+                                  margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns jcr:primaryType="nt:unstructured"
+                                     sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                     margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <organizationName jcr:primaryType="nt:unstructured"
+                                                              sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                              fieldLabel="Organization Name"
+                                                              name="./organizationName"/>
+                                            <organizationUrl jcr:primaryType="nt:unstructured"
+                                                             sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                             fieldLabel="Organization URL"
+                                                             name="./organizationUrl"/>
+                                            <organizationLogo jcr:primaryType="nt:unstructured"
+                                                              sling:resourceType="granite/ui/components/coral/foundation/form/pathbrowser"
+                                                              fieldLabel="Organization Logo"
+                                                              name="./organizationLogo"
+                                                              rootPath="/content/dam"/>
+                                            <certifications jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                                            fieldLabel="Certifications"
+                                                            composite="{Boolean}false">
+                                                <field jcr:primaryType="nt:unstructured"
+                                                       sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                       name="./value"/>
+                                            </certifications>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </organization>
+                    <trust jcr:primaryType="nt:unstructured"
+                           jcr:title="Trust Signals"
+                           sling:resourceType="granite/ui/components/coral/foundation/container"
+                           margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns jcr:primaryType="nt:unstructured"
+                                     sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                     margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <factCheckUrl jcr:primaryType="nt:unstructured"
+                                                           sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                           fieldLabel="Fact Check URL"
+                                                           name="./factCheckUrl"/>
+                                            <reviewRating jcr:primaryType="nt:unstructured"
+                                                          sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
+                                                          fieldLabel="Review Rating (1-5)"
+                                                          name="./reviewRating"
+                                                          min="{Double}1.0"
+                                                          max="{Double}5.0"
+                                                          step="{Double}0.1"/>
+                                            <reviewCount jcr:primaryType="nt:unstructured"
+                                                         sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
+                                                         fieldLabel="Review Count"
+                                                         name="./reviewCount"
+                                                         min="{Long}0"/>
+                                            <trustBadges jcr:primaryType="nt:unstructured"
+                                                         sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                                         fieldLabel="Trust Badges"
+                                                         composite="{Boolean}false">
+                                                <field jcr:primaryType="nt:unstructured"
+                                                       sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                       name="./value"/>
+                                            </trustBadges>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </trust>
+                    <provenance jcr:primaryType="nt:unstructured"
+                                jcr:title="Provenance"
+                                sling:resourceType="granite/ui/components/coral/foundation/container"
+                                margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns jcr:primaryType="nt:unstructured"
+                                     sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                     margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <publishedDate jcr:primaryType="nt:unstructured"
+                                                           sling:resourceType="granite/ui/components/coral/foundation/form/datepicker"
+                                                           fieldLabel="Published Date"
+                                                           name="./publishedDate"
+                                                           type="datetime"/>
+                                            <lastModifiedDate jcr:primaryType="nt:unstructured"
+                                                              sling:resourceType="granite/ui/components/coral/foundation/form/datepicker"
+                                                              fieldLabel="Last Modified Date"
+                                                              name="./lastModifiedDate"
+                                                              type="datetime"/>
+                                            <editorialProcess jcr:primaryType="nt:unstructured"
+                                                              sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                                                              fieldLabel="Editorial Process"
+                                                              name="./editorialProcess"
+                                                              rows="3"/>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </provenance>
+                </items>
+            </tabs>
+        </items>
+    </content>
+</jcr:root>

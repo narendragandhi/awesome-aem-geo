@@ -45,12 +45,32 @@ awesome-aem-geo/
 
 ## Components
 
+### Sling Models
+
 | Component | Status | Description |
 |-----------|--------|-------------|
-| SEO Metadata | Implemented | Title, description, canonical, OpenGraph, robots |
-| JSON-LD Schema | Planned | Schema.org markup for AI/SEO |
-| Sitemap Generator | Planned | XML sitemaps for AI crawlers |
-| AI Bot Handler | Planned | Detection and optimized responses |
+| SEO Metadata | Implemented | Title, description, canonical, OpenGraph, Twitter Cards, robots directives |
+| E-E-A-T Signals | Implemented | Experience, Expertise, Authoritativeness, Trustworthiness signals |
+| AI Content Exporter | Implemented | Structured JSON export for AI crawlers |
+| Image SEO | Implemented | Image metadata, alt text validation, ImageObject schema |
+
+### OSGi Services
+
+| Service | Status | Description |
+|---------|--------|-------------|
+| JSON-LD Schema Service | Implemented | Schema.org markup generation (Article, FAQ, HowTo, Breadcrumb, etc.) |
+| Sitemap Generator | Implemented | XML sitemaps with sitemap index support |
+| AI Bot Handler | Implemented | Detection and visit recording for ClaudeBot, GPTBot, Perplexity |
+| Robots.txt Service | Implemented | Dynamic robots.txt with crawl-delay and path rules |
+| Image SEO Service | Implemented | ImageObject schema, alt text validation, image sitemap entries |
+| EEAT Signals Service | Implemented | Author, Organization, Review, FactCheck schema |
+| AI Analytics Service | Implemented | Track AI bot visits, analytics summary |
+
+### Filters
+
+| Filter | Status | Description |
+|--------|--------|-------------|
+| AI Bot Filter | Implemented | Servlet filter to detect and record AI bot visits |
 
 ## Getting Started
 
