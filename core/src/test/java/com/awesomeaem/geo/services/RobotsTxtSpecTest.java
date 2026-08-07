@@ -47,6 +47,8 @@ class RobotsTxtSpecTest {
             
             assertTrue(result.contains("User-agent: GPTBot"));
             assertTrue(result.contains("User-agent: ClaudeBot"));
+            assertTrue(result.contains("User-agent: Claude-SearchBot"));
+            assertTrue(result.contains("User-agent: Claude-User"));
         }
 
         @Test

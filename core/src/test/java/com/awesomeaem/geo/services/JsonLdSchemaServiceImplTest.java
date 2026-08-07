@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,6 +16,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import com.awesomeaem.geo.services.impl.JsonLdSchemaServiceImpl;
+import com.adobe.cq.wcm.core.components.models.Page;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -22,6 +25,21 @@ import com.google.gson.JsonParser;
 class JsonLdSchemaServiceImplTest {
 
     private final JsonLdSchemaServiceImpl service = new JsonLdSchemaServiceImpl();
+
+    @Test
+    @DisplayName("Page-only generation should produce a WebPage contract")
+    void pageOnlyGenerationUsesPageMetadata() {
+        Page page = mock(Page.class);
+        when(page.getTitle()).thenReturn("About us");
+        when(page.getDescription()).thenReturn("Our story");
+        when(page.getCanonicalLink()).thenReturn("https://example.test/about");
+
+        JsonObject obj = JsonParser.parseString(service.generateSchema(page, null)).getAsJsonObject();
+
+        assertEquals("WebPage", obj.get("@type").getAsString());
+        assertEquals("About us", obj.get("name").getAsString());
+        assertEquals("https://example.test/about", obj.get("url").getAsString());
+    }
 
     @Test
     @DisplayName("FAQPage schema should use question/answer from faqItems JSON")

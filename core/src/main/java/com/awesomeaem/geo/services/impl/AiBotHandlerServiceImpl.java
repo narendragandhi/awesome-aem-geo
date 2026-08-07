@@ -32,6 +32,8 @@ public class AiBotHandlerServiceImpl implements AiBotHandlerService {
         AI_BOT_PATTERNS.put("ChatGPT-User", "OpenAI");
         AI_BOT_PATTERNS.put("ClaudeBot", "Anthropic");
         AI_BOT_PATTERNS.put("Claude-Web", "Anthropic");
+        AI_BOT_PATTERNS.put("Claude-SearchBot", "Anthropic");
+        AI_BOT_PATTERNS.put("Claude-User", "Anthropic");
         AI_BOT_PATTERNS.put("Google-Extended", "Google");
         AI_BOT_PATTERNS.put("PerplexityBot", "Perplexity");
         AI_BOT_PATTERNS.put("Bytespider", "ByteDance");

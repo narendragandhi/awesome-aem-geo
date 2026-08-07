@@ -84,6 +84,13 @@ class AiBotHandlerSpecTest {
             
             assertEquals("ClaudeBot", service.getBotName(request));
         }
+
+        @Test
+        @DisplayName("Should detect current Claude search and user agents")
+        void should_detect_current_claude_agents() {
+            assertTrue(service.isAiBotUserAgent("Claude-SearchBot/1.0"));
+            assertTrue(service.isAiBotUserAgent("Claude-User/1.0"));
+        }
     }
 
     @Nested

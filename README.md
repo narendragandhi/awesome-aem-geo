@@ -1,37 +1,32 @@
 # Awesome AEM GEO
 
-> AEM GEO - Search Engine Optimization & LLM Optimization for Adobe Experience Manager
+> A reference implementation for publishing trustworthy, machine-readable AEM content to search engines and AI agents.
 
 ## Overview
 
-Awesome AEM GEO is a collection of AEM components and tools for optimizing AEM-powered sites for:
+Awesome AEM GEO turns authored AEM content into a publishing contract that has:
 
-- **Traditional Search** - Google, Bing, Yahoo
-- **LLM Search** - ChatGPT, Perplexity, Claude, Gemini
-- **AI-powered Search** - Semantic search, vector search
+- explicit Schema.org JSON-LD types and required fields;
+- provenance, author, organization, and trust signals;
+- safe structured exports for machine consumers; and
+- crawl and discovery adapters such as robots.txt and sitemaps.
 
-## Architecture
+This is not a vector-search product, an AI gateway, or an authorization layer. The SEO and crawler features are delivery adapters around the content contract.
 
-This project follows the **BMAD** (Business Model for AI Development) methodology with:
+See [the architecture](./docs/architecture.md) for the boundaries and [the roadmap](./docs/roadmap.md) for the intentionally narrow next steps.
 
-- **Spec-Driven Development** - All components start with SPEC.md
-- **TDD** - Tests written before implementation
-- **BEAD** - Breaking tasks into beads for agent-based development
-- **Gastown** - Orchestrator for multi-agent workflows
+## How it fits
+
+The page is the source of truth. This project maps authored AEM properties into a
+small, testable content contract and exposes that contract through page metadata,
+JSON-LD, a structured JSON export, robots.txt, and XML sitemaps. It does not
+replace AEM authoring, search indexing, or AI inference.
 
 ## Project Structure
 
 ```
 awesome-aem-geo/
-├── bmad/                    # GasTown configuration
-│   ├── gastown/
-│   │   ├── agents/          # Agent personas
-│   │   ├── workflows/      # Workflow definitions
-│   │   ├── bead/           # BEAD issues and templates
-│   │   │   ├── templates/  # Issue templates
-│   │   │   ├── library/    # Shared context/memory
-│   │   │   └── .issues/    # Active issues
-│   │   └── config/         # Configuration files
+├── bmad/                    # Historical planning and task artifacts
 ├── core/                    # Core bundle (Java/OSGi)
 │   └── src/
 │       ├── main/java/      # Sling Models, Services
@@ -43,34 +38,43 @@ awesome-aem-geo/
 └── pom.xml                 # Maven parent POM
 ```
 
-## Components
+## Feature inventory
 
 ### Sling Models
 
 | Component | Status | Description |
 |-----------|--------|-------------|
-| SEO Metadata | Implemented | Title, description, canonical, OpenGraph, Twitter Cards, robots directives |
-| E-E-A-T Signals | Implemented | Experience, Expertise, Authoritativeness, Trustworthiness signals |
-| AI Content Exporter | Implemented | Structured JSON export for AI crawlers |
-| Image SEO | Implemented | Image metadata, alt text validation, ImageObject schema |
+| E-E-A-T Signals | Core | Experience, expertise, authoritativeness, trustworthiness, and provenance data |
+| JSON-LD Schema | Core | Validated Article, FAQ, HowTo, Product, Organization, Breadcrumb, and WebPage output |
+| Machine-readable Export | Core | Safe, structured content snapshot for machine consumers |
+| Contract Validator | Core | Actionable completeness report for authored metadata and schema output |
+| SEO Metadata | Adapter | Canonical, Open Graph, Twitter, and robots metadata |
 
 ### OSGi Services
 
 | Service | Status | Description |
 |---------|--------|-------------|
-| JSON-LD Schema Service | Implemented | Schema.org markup generation (Article, FAQ, HowTo, Breadcrumb, etc.) |
-| Sitemap Generator | Implemented | XML sitemaps with sitemap index support |
-| AI Bot Handler | Implemented | Detection and visit recording for ClaudeBot, GPTBot, Perplexity |
-| Robots.txt Service | Implemented | Dynamic robots.txt with crawl-delay and path rules |
-| Image SEO Service | Implemented | ImageObject schema, alt text validation, image sitemap entries |
-| EEAT Signals Service | Implemented | Author, Organization, Review, FactCheck schema |
-| AI Analytics Service | Implemented | Track AI bot visits, analytics summary |
+| Sitemap Generator | Adapter | XML sitemap generation from publishable AEM pages |
+| Robots.txt Service | Adapter | Crawler rules and sitemap discovery reference |
+| Image SEO Service | Adapter | ImageObject metadata and image sitemap support |
+| AI Bot Handler | Observability | Advisory user-agent detection and visit recording; not access control |
+| AI Analytics Service | Experimental | Bounded in-memory development telemetry; not production analytics |
 
 ### Filters
 
 | Filter | Status | Description |
 |--------|--------|-------------|
-| AI Bot Filter | Implemented | Servlet filter to detect and record AI bot visits |
+| AI Bot Filter | Observability | Records advisory bot visits; never authorizes requests |
+
+### Public endpoints
+
+| Endpoint | Description |
+|----------|-------------|
+| `/robots.txt` | Generated crawler rules and sitemap reference |
+| `/sitemap.xml` | XML sitemap; accepts optional `root` and `max` query parameters |
+| `/bin/awesome-aem-geo/content.json?path=/content/...` | Safe structured metadata snapshot for AI consumers |
+| `/bin/awesome-aem-geo/contract.json?path=/content/...` | Contract validation report with errors, warnings, and emitted schema |
+| `/bin/awesome-aem-geo/visibility.json` | Bounded crawler and AI-referral summary; not production analytics |
 
 ## Getting Started
 
@@ -78,58 +82,62 @@ awesome-aem-geo/
 
 - Java 21
 - Maven 3.9+
-- AEM SDK 2026.2+
+- The AEM SDK version declared in `pom.xml`
 
 ### Build
 
 ```bash
-# Build all modules
-mvn clean install
+# Build all modules without deploying
+mvn clean verify
 
-# Build specific module
-mvn clean install -pl core
-mvn clean install -pl ui.apps
+# Build specific modules
+mvn clean verify -pl core,ui.apps,all -am
 ```
 
 ### Run Tests
 
 ```bash
-# Run all tests with coverage
-mvn test
-
-# Run with coverage report
+# Run tests and coverage checks
 mvn verify
+
+# Deploy explicitly to a local author instance (credentials are not committed)
+mvn install -PautoInstallSinglePackage -Daem.user=admin -Daem.password=admin
 ```
 
-## Development Workflow
+The install includes a demo page at `/content/awesome-aem-geo/us/en`.
 
-1. **Create Issue** - Use BEAD template to create a new task
-2. **Write SPEC** - Document requirements in SPEC-{issue}.md
-3. **Write Tests** - TDD: Write failing tests first
-4. **Implement** - Write code to pass tests
-5. **Review** - Code review by reviewer agent
-6. **Complete** - Move to completed folder
+### Showcase and verification
 
-## Using Gastown
+Open [the browser showcase](./showcase/index.html) after starting AEM. For a
+repeatable endpoint check, run:
 
 ```bash
-# Start a new workflow
-# (Requires Claude Code or similar AI assistant)
+./scripts/verify-demo.sh
 ```
 
-See `bmad/gastown/config/gastown.yaml` for workflow configurations.
+The verifier accepts `AEM_BASE_URL`, `AEM_USER`, `AEM_PASSWORD`, and
+`AEM_DEMO_PATH` environment variables.
+
+## Development workflow
+
+Keep changes contract-first: define the authored input and emitted representation,
+add a focused test, implement the mapping, and update the demo. New work should
+strengthen the machine-readable publishing contract rather than add another
+generic SEO feature. The `bmad/` directory contains historical planning artifacts.
 
 ## Documentation
 
-- [BMAD Methodology](./bmad/README.md)
-- [GasTown Configuration](./bmad/gastown/config/gastown.yaml)
-- [BEAD Templates](./bmad/gastown/bead/templates/)
-- [Shared Context](./bmad/gastown/bead/library/README.md)
+- [Demo and showcase guide](./docs/demo.md)
+- [Architecture and boundaries](./docs/architecture.md)
+- [Roadmap](./docs/roadmap.md)
+- [AI discovery readiness specification](./docs/specs/ai-discovery-readiness.md)
+- [SEO and GEO positioning](./docs/seo-positioning.md)
+- [Architecture decision records](./docs/decisions/)
 
 ## Dependencies
 
 ### Core
-- AEM SDK API 2026.2+
+- AEM SDK API version declared in `pom.xml`
 - Apache Sling Models
 - Lombok
 - GSON for JSON
@@ -141,4 +149,4 @@ See `bmad/gastown/config/gastown.yaml` for workflow configurations.
 
 ## License
 
-MIT
+MIT; see [LICENSE](./LICENSE).

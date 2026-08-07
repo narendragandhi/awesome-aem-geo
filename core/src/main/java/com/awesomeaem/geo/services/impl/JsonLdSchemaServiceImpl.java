@@ -57,6 +57,20 @@ public class JsonLdSchemaServiceImpl implements JsonLdSchemaService {
         ValueMap properties = null;
         if (content != null) {
             properties = content.getValueMap();
+        } else if (page != null) {
+            JsonObject schema = new JsonObject();
+            schema.addProperty("@context", SCHEMA_CONTEXT);
+            schema.addProperty("@type", "WebPage");
+            if (StringUtils.isNotBlank(page.getTitle())) {
+                schema.addProperty("name", page.getTitle());
+            }
+            if (StringUtils.isNotBlank(page.getDescription())) {
+                schema.addProperty("description", page.getDescription());
+            }
+            if (page.getCanonicalLink() != null) {
+                schema.addProperty("url", page.getCanonicalLink());
+            }
+            return schema.toString();
         }
 
         return generateSchemaFromProperties(properties);

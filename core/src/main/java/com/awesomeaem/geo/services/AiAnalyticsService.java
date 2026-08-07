@@ -51,11 +51,34 @@ public interface AiAnalyticsService {
     ) {}
 
     /**
+     * Represents a referral from an AI search product.
+     */
+    record ReferralVisit(
+        String source,
+        String requestedPath,
+        Instant timestamp
+    ) {}
+
+    /**
      * Record a bot visit.
      * 
      * @param visit The visit to record
      */
     void recordVisit(BotVisit visit);
+
+    /**
+     * Record a user referral from an AI search product.
+     *
+     * @param referral referral event
+     */
+    void recordReferral(ReferralVisit referral);
+
+    /**
+     * Get referral counts by source.
+     *
+     * @return source-to-count map
+     */
+    Map<String, Integer> getReferralBreakdown();
 
     /**
      * Get analytics summary for a time range.

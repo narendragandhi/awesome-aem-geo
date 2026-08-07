@@ -322,6 +322,24 @@ class SeoMetadataModelImplTest {
         }
 
         @Test
+        @DisplayName("No snippet should suppress previews")
+        void no_snippet_should_suppress_previews() throws Exception {
+            when(valueMap.get("noSnippet", Boolean.class)).thenReturn(true);
+
+            assertEquals("index,follow,nosnippet", model.getRobots());
+            assertTrue(model.isNoSnippet());
+        }
+
+        @Test
+        @DisplayName("Maximum snippet should limit previews")
+        void max_snippet_should_limit_previews() throws Exception {
+            when(valueMap.get("maxSnippet", Integer.class)).thenReturn(120);
+
+            assertEquals("index,follow,max-snippet:120", model.getRobots());
+            assertEquals(120, model.getMaxSnippet());
+        }
+
+        @Test
         @DisplayName("isIndexable returns true by default")
         void isIndexable_returns_true_by_default() throws Exception {
             // When

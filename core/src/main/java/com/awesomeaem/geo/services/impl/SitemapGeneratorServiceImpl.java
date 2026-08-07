@@ -29,7 +29,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * Implementation of Sitemap Generator Service
  * 
- * Generates XML sitemaps for search engines and AI crawlers.
+ * Generates XML sitemaps from publishable AEM pages.
  */
 @Slf4j
 @Component(service = SitemapGeneratorService.class)
@@ -57,6 +57,8 @@ public class SitemapGeneratorServiceImpl implements SitemapGeneratorService {
         }
         if (maxUrls <= 0) {
             maxUrls = DEFAULT_MAX_URLS;
+        } else {
+            maxUrls = Math.min(maxUrls, DEFAULT_MAX_URLS);
         }
 
         StringBuilder xml = new StringBuilder();

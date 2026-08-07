@@ -11,7 +11,7 @@ import org.apache.sling.models.annotations.Model;
 /**
  * Sling Model for E-E-A-T (Experience, Expertise, Authoritativeness, Trustworthiness) signals.
  * 
- * <p>Exports structured data for AI/LLM optimization and traditional SEO.</p>
+ * <p>Exports structured provenance and trust data for the publishing contract.</p>
  * 
  * @since 1.0.0
  */

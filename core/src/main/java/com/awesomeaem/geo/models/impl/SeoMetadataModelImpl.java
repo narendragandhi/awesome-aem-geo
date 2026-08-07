@@ -152,7 +152,25 @@ public class SeoMetadataModelImpl implements SeoMetadataModel {
             isIndexable() ? "index" : "noindex",
             isFollowable() ? "follow" : "nofollow"
         );
-        return String.join(",", directives);
+        java.util.ArrayList<String> allDirectives = new java.util.ArrayList<>(directives);
+        if (isNoSnippet()) {
+            allDirectives.add("nosnippet");
+        } else if (getMaxSnippet() >= 0) {
+            allDirectives.add("max-snippet:" + getMaxSnippet());
+        }
+        return String.join(",", allDirectives);
+    }
+
+    @Override
+    public boolean isNoSnippet() {
+        Boolean noSnippet = getInheritedPageProperty("noSnippet", Boolean.class);
+        return noSnippet != null && noSnippet;
+    }
+
+    @Override
+    public int getMaxSnippet() {
+        Integer maxSnippet = getInheritedPageProperty("maxSnippet", Integer.class);
+        return maxSnippet != null && maxSnippet >= 0 ? maxSnippet : -1;
     }
 
     @Override

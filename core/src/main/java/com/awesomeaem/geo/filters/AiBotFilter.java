@@ -16,6 +16,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 import com.awesomeaem.geo.services.AiBotHandlerService;
+import com.awesomeaem.geo.services.AiAnalyticsService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -36,6 +37,9 @@ public class AiBotFilter implements Filter {
     @Reference
     private AiBotHandlerService aiBotHandlerService;
 
+    @Reference
+    private AiAnalyticsService aiAnalyticsService;
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         log.info("AI Bot Filter initialized");
@@ -47,6 +51,16 @@ public class AiBotFilter implements Filter {
         
         if (request instanceof SlingHttpServletRequest slingRequest && response instanceof HttpServletResponse httpResponse) {
             HttpServletRequest httpRequest = (HttpServletRequest) request;
+
+            String referralSource = httpRequest.getParameter("utm_source");
+            if ("chatgpt.com".equalsIgnoreCase(referralSource)
+                    && aiAnalyticsService != null) {
+                aiAnalyticsService.recordReferral(new AiAnalyticsService.ReferralVisit(
+                    "chatgpt.com",
+                    slingRequest.getRequestPathInfo().getResourcePath(),
+                    java.time.Instant.now()
+                ));
+            }
             
             if (aiBotHandlerService != null && aiBotHandlerService.isAiBot(httpRequest)) {
                 String botName = aiBotHandlerService.getBotName(httpRequest);

@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Awesome AEM GEO — Publishing Contract Showcase</title>
+  <style>
+    :root { color-scheme: dark; --bg: #10151c; --panel: #18212b; --muted: #9eabb8; --text: #f3f6f8; --accent: #6ee7b7; --warn: #fbbf24; --bad: #fb7185; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: radial-gradient(circle at top right, #1d3b42, var(--bg) 45%); color: var(--text); font: 16px/1.5 system-ui, sans-serif; }
+    main { max-width: 1180px; margin: auto; padding: 48px 24px 72px; }
+    .eyebrow { color: var(--accent); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+    h1 { max-width: 760px; font-size: clamp(2.4rem, 7vw, 5.2rem); line-height: .98; margin: 12px 0 20px; }
+    h2 { margin-top: 0; }
+    .lede { max-width: 700px; color: var(--muted); font-size: 1.15rem; }
+    .controls, .card { background: color-mix(in srgb, var(--panel) 92%, transparent); border: 1px solid #2b3946; border-radius: 16px; padding: 20px; box-shadow: 0 16px 40px #0003; }
+    .controls { display: grid; grid-template-columns: 1fr 1fr auto; gap: 12px; margin: 32px 0; }
+    label { display: grid; gap: 6px; color: var(--muted); font-size: .85rem; }
+    input, button { border: 1px solid #3d4c59; border-radius: 9px; padding: 11px 12px; font: inherit; }
+    input { background: #0d1218; color: var(--text); }
+    button { align-self: end; background: var(--accent); color: #08251d; border: 0; font-weight: 800; cursor: pointer; }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .wide { grid-column: 1 / -1; }
+    .status { color: var(--muted); margin: 12px 0 24px; min-height: 24px; }
+    .status.ok { color: var(--accent); } .status.error { color: var(--bad); }
+    .metric { display: flex; justify-content: space-between; border-bottom: 1px solid #2b3946; padding: 9px 0; }
+    .metric:last-child { border-bottom: 0; }
+    pre { margin: 0; max-height: 380px; overflow: auto; background: #0b1015; border-radius: 10px; padding: 16px; color: #c9f7df; font-size: .85rem; }
+    .pill { display: inline-block; border-radius: 999px; padding: 3px 9px; background: #244337; color: var(--accent); font-size: .8rem; font-weight: 700; }
+    .note { color: var(--muted); font-size: .9rem; }
+    @media (max-width: 760px) { .controls, .grid { grid-template-columns: 1fr; } .wide { grid-column: auto; } }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="eyebrow">Awesome AEM GEO</div>
+    <h1>One authored page. Five discovery surfaces.</h1>
+    <p class="lede">Inspect the same AEM content as a contract report, structured export, robots policy, sitemap entry, and bounded visibility telemetry.</p>
+
+    <form class="controls" id="form">
+      <label>AEM base URL<input id="base" value="http://localhost:4502" spellcheck="false"></label>
+      <label>Content path<input id="path" value="/content/awesome-aem-geo/us/en" spellcheck="false"></label>
+      <button type="submit">Inspect page</button>
+    </form>
+    <div id="status" class="status">Ready. Start AEM and inspect the packaged demo page.</div>
+
+    <section class="grid">
+      <article class="card" id="contract-card"><h2>Contract score</h2><div id="contract-summary" class="note">No report loaded.</div></article>
+      <article class="card"><h2>Visibility signals</h2><div id="visibility-summary" class="note">No telemetry loaded.</div></article>
+      <article class="card"><h2>What this proves</h2><div class="metric"><span>Authored source</span><span class="pill">AEM page</span></div><div class="metric"><span>Validation</span><span class="pill">Contract report</span></div><div class="metric"><span>Machine output</span><span class="pill">JSON + JSON-LD</span></div><div class="metric"><span>Discovery</span><span class="pill">robots + sitemap</span></div></article>
+      <article class="card wide"><h2>Contract report</h2><pre id="contract">Click “Inspect page” to load the contract report.</pre></article>
+      <article class="card"><h2>Machine-readable export</h2><pre id="content">Not loaded.</pre></article>
+      <article class="card"><h2>Robots policy</h2><pre id="robots">Not loaded.</pre></article>
+      <article class="card wide"><h2>Sitemap</h2><pre id="sitemap">Not loaded.</pre></article>
+      <article class="card wide"><h2>Visibility telemetry</h2><pre id="visibility">Not loaded.</pre></article>
+    </section>
+    <p class="note">If the browser blocks cross-origin requests, serve this folder behind the same AEM origin or configure AEM CORS for the showcase origin. The endpoint verifier works without browser CORS.</p>
+  </main>
+  <script>
+    const $ = id => document.getElementById(id);
+    const pretty = value => typeof value === 'string' ? value : JSON.stringify(value, null, 2);
+    async function get(url) { const response = await fetch(url); if (!response.ok) throw new Error(`${response.status} ${response.statusText}: ${url}`); const type = response.headers.get('content-type') || ''; return type.includes('json') ? response.json() : response.text(); }
+    $('form').addEventListener('submit', async event => {
+      event.preventDefault();
+      const base = $('base').value.replace(/\/$/, '');
+      const path = $('path').value;
+      const query = `?path=${encodeURIComponent(path)}`;
+      $('status').className = 'status'; $('status').textContent = 'Loading AEM surfaces…';
+      try {
+        const [contract, content, robots, sitemap, visibility] = await Promise.all([
+          get(`${base}/bin/awesome-aem-geo/contract.json${query}`),
+          get(`${base}/bin/awesome-aem-geo/content.json${query}`),
+          get(`${base}/robots.txt`),
+          get(`${base}/sitemap.xml?root=${encodeURIComponent(path)}&max=100`),
+          get(`${base}/bin/awesome-aem-geo/visibility.json`)
+        ]);
+        $('contract').textContent = pretty(contract); $('content').textContent = pretty(content); $('robots').textContent = robots; $('sitemap').textContent = sitemap; $('visibility').textContent = pretty(visibility);
+        $('contract-summary').innerHTML = `<span class="pill">${contract.valid ? 'VALID' : 'NEEDS WORK'}</span> ${contract.schemaType || 'No schema'} · ${contract.errors.length} errors · ${contract.warnings.length} warnings`;
+        const crawlerCount = Object.values(visibility.crawlerVisits || {}).reduce((sum, count) => sum + count, 0);
+        const referralCount = Object.values(visibility.aiReferrals || {}).reduce((sum, count) => sum + count, 0);
+        $('visibility-summary').innerHTML = `<span class="pill">DIAGNOSTIC</span> ${crawlerCount} crawler visits · ${referralCount} AI referrals`;
+        $('status').className = 'status ok'; $('status').textContent = 'Loaded. This is one page represented across five discovery surfaces.';
+      } catch (error) { $('status').className = 'status error'; $('status').textContent = error.message; }
+    });
+  </script>
+</body>
+</html>

@@ -25,6 +25,7 @@ import com.awesomeaem.geo.services.AiAnalyticsService;
 public class AiAnalyticsServiceImpl implements AiAnalyticsService {
 
     private final ConcurrentLinkedQueue<BotVisit> visitStore = new ConcurrentLinkedQueue<>();
+    private final ConcurrentLinkedQueue<ReferralVisit> referralStore = new ConcurrentLinkedQueue<>();
     private static final int MAX_STORE_SIZE = 10000;
 
     @Override
@@ -47,6 +48,31 @@ public class AiAnalyticsServiceImpl implements AiAnalyticsService {
         while (visitStore.size() > MAX_STORE_SIZE) {
             visitStore.poll();
         }
+    }
+
+    @Override
+    public void recordReferral(ReferralVisit referral) {
+        if (referral == null || StringUtils.isBlank(referral.source())
+                || StringUtils.isBlank(referral.requestedPath())) {
+            return;
+        }
+        referralStore.add(new ReferralVisit(
+            referral.source().trim().toLowerCase(),
+            referral.requestedPath(),
+            referral.timestamp() != null ? referral.timestamp() : Instant.now()
+        ));
+        while (referralStore.size() > MAX_STORE_SIZE) {
+            referralStore.poll();
+        }
+    }
+
+    @Override
+    public Map<String, Integer> getReferralBreakdown() {
+        Map<String, Integer> counts = new HashMap<>();
+        for (ReferralVisit referral : referralStore) {
+            counts.merge(referral.source(), 1, Integer::sum);
+        }
+        return counts;
     }
 
     @Override
@@ -130,6 +156,7 @@ public class AiAnalyticsServiceImpl implements AiAnalyticsService {
     @Override
     public void clear() {
         visitStore.clear();
+        referralStore.clear();
     }
 
     private List<BotVisit> filterByTimeRange(String timeRange) {

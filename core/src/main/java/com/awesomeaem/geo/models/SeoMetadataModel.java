@@ -135,6 +135,20 @@ public interface SeoMetadataModel extends ComponentExporter {
     String getRobots();
 
     /**
+     * Whether search and AI result previews should be suppressed.
+     *
+     * @return true when the page emits the nosnippet directive
+     */
+    boolean isNoSnippet();
+
+    /**
+     * Maximum preview length, or -1 when no limit is configured.
+     *
+     * @return max-snippet value in words
+     */
+    int getMaxSnippet();
+
+    /**
      * Get locale
      * 
      * @return locale string (e.g., "en_US")

@@ -135,6 +135,31 @@ class AiAnalyticsSpecTest {
     }
 
     @Nested
+    @DisplayName("Requirement 2a: AI Referral Visibility")
+    class ReferralVisibility {
+
+        @Test
+        @DisplayName("Should count ChatGPT referrals separately from crawlers")
+        void should_count_chatgpt_referrals() {
+            service.recordReferral(new AiAnalyticsService.ReferralVisit(
+                "ChatGPT.com", "/content/page", Instant.now()));
+            service.recordVisit(createVisit("OAI-SearchBot", "/content/page"));
+
+            assertEquals(1, service.getReferralBreakdown().get("chatgpt.com"));
+            assertEquals(1, service.getBotBreakdown().get("OAI-SearchBot"));
+        }
+
+        @Test
+        @DisplayName("Should ignore incomplete referrals")
+        void should_ignore_incomplete_referrals() {
+            service.recordReferral(null);
+            service.recordReferral(new AiAnalyticsService.ReferralVisit(null, "/page", Instant.now()));
+
+            assertTrue(service.getReferralBreakdown().isEmpty());
+        }
+    }
+
+    @Nested
     @DisplayName("Requirement 3: Recent Visits")
     class RecentVisits {
         

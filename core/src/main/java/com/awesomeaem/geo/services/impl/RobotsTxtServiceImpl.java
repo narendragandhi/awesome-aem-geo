@@ -31,6 +31,7 @@ public class RobotsTxtServiceImpl implements RobotsTxtService {
     private static final String DEFAULT_DISALLOW = "/";
     private static final List<String> DEFAULT_AI_BOTS = List.of(
         "GPTBot", "ChatGPT-User", "ClaudeBot", "Claude-Web",
+        "Claude-SearchBot", "Claude-User",
         "Google-Extended", "PerplexityBot", "Bytespider",
         "Amazonbot", "OAI-SearchBot", "Applebot", "DuckAssistBot"
     );
@@ -62,7 +63,7 @@ public class RobotsTxtServiceImpl implements RobotsTxtService {
     public String generateRobotsTxt(String domain) {
         StringBuilder sb = new StringBuilder();
         
-        sb.append("# Robots.txt for AEM GEO - LLM Optimization\n");
+        sb.append("# Robots.txt for Awesome AEM GEO machine-readable publishing\n");
         sb.append("# Generated automatically\n\n");
         
         sb.append("User-agent: *\n");

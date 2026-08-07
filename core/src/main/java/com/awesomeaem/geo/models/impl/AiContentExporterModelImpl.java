@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * Implementation of AiContentExporterModel.
- * Exports content optimized for AI/LLM consumption.
+ * Exports a stable, structured content snapshot for machine consumers.
  * 
  * @see AiContentExporterModel
  */

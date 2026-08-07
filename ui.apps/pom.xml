@@ -17,6 +17,12 @@
     <description>UI apps package for Awesome AEM GEO</description>
 
     <dependencies>
+        <dependency>
+            <groupId>com.awesomeaem.geo</groupId>
+            <artifactId>awesome-aem-geo.ui.apps.structure</artifactId>
+            <version>${project.version}</version>
+            <type>zip</type>
+        </dependency>
         <!-- Internal dependencies -->
         <dependency>
             <groupId>com.awesomeaem.geo</groupId>
@@ -34,12 +40,13 @@
         <dependency>
             <groupId>com.adobe.cq</groupId>
             <artifactId>core.wcm.components.content</artifactId>
-            <version>2.26.0</version>
+            <version>${core.wcm.components.version}</version>
             <type>zip</type>
         </dependency>
     </dependencies>
 
     <build>
+        <sourceDirectory>src/main/content/jcr_root</sourceDirectory>
         <plugins>
             <!-- Content Package Maven Plugin -->
             <plugin>
@@ -62,24 +69,28 @@
                 <configuration>
                     <group>com.awesomeaem.geo</group>
                     <name>awesome-aem-geo.ui.apps</name>
-                    <packageType>mixed</packageType>
+                    <packageType>application</packageType>
+                    <repositoryStructurePackages>
+                        <repositoryStructurePackage>
+                            <groupId>com.awesomeaem.geo</groupId>
+                            <artifactId>awesome-aem-geo.ui.apps.structure</artifactId>
+                        </repositoryStructurePackage>
+                    </repositoryStructurePackages>
                     <properties>
                         <cloudManagerTarget>none</cloudManagerTarget>
                     </properties>
                 </configuration>
             </plugin>
-
-            <!-- Content Package Plugin -->
             <plugin>
                 <groupId>com.day.jcr.vault</groupId>
                 <artifactId>content-package-maven-plugin</artifactId>
+                <extensions>true</extensions>
                 <configuration>
-                    <targetURL>http://${aem.host}:${aem.port}/crx/packmgr/service.jsp</targetURL>
+                    <verbose>true</verbose>
                     <failOnError>true</failOnError>
-                    <userId>admin</userId>
-                    <password>admin</password>
                 </configuration>
             </plugin>
+
         </plugins>
     </build>
 </project>

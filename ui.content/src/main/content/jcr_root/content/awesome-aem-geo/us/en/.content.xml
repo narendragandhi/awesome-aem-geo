@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0"
+          xmlns:cq="http://www.day.com/jcr/cq/1.0"
+          jcr:primaryType="cq:Page">
+    <jcr:content xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+                 jcr:primaryType="nt:unstructured"
+                 jcr:title="Machine-readable publishing with AEM"
+                 jcr:description="A reproducible demonstration of one authored AEM page becoming trustworthy metadata for people, crawlers, and machine consumers."
+                 schemaType="Article"
+                 authorName="Awesome AEM GEO Editorial Team"
+                 canonicalUrl="https://www.example.com/content/awesome-aem-geo/us/en.html"
+                 publishDate="{Date}2026-08-05T12:00:00.000Z"
+                 jcr:lastModified="{Date}2026-08-05T12:00:00.000Z"
+                 cq:template="/conf/awesome-aem-geo/settings/wcm/templates/demo"/>
+</jcr:root>

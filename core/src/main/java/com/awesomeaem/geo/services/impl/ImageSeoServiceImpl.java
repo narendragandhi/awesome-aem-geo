@@ -246,11 +246,11 @@ public class ImageSeoServiceImpl implements ImageSeoService {
                 String assetPath = asset.getPath();
                 String title = meta != null ? meta.get("dc:title", String.class) : null;
                 xml.append("  <url>\n");
-                xml.append("    <loc>").append(assetPath).append("</loc>\n");
+                xml.append("    <loc>").append(escapeXml(assetPath)).append("</loc>\n");
                 xml.append("    <image:image>\n");
-                xml.append("      <image:loc>").append(assetPath).append("</image:loc>\n");
+                xml.append("      <image:loc>").append(escapeXml(assetPath)).append("</image:loc>\n");
                 if (StringUtils.isNotBlank(title)) {
-                    xml.append("      <image:title>").append(title).append("</image:title>\n");
+                    xml.append("      <image:title>").append(escapeXml(title)).append("</image:title>\n");
                 }
                 xml.append("    </image:image>\n");
                 xml.append("  </url>\n");
@@ -301,6 +301,14 @@ public class ImageSeoServiceImpl implements ImageSeoService {
             }
         }
         return null;
+    }
+
+    private String escapeXml(String value) {
+        return value == null ? "" : value.replace("&", "&amp;")
+            .replace("<", "&lt;")
+            .replace(">", "&gt;")
+            .replace("\"", "&quot;")
+            .replace("'", "&apos;");
     }
 
     private ResourceResolver getServiceResolver() {
